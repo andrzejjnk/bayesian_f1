@@ -5,26 +5,30 @@ data {
     array [N] int<lower=1, upper=D> drivers; // indeksy kierowcow
     array [N] int<lower=1, upper=C> constructors; // indeksy konstruktorow
     array [N] int<lower=0, upper=19> position;
+    array [N] int<lower=0, upper=1> rainy;
 }
 
 parameters {
     array[D] real driver_skill;
     array[C] real constructor_skill;
+    array[D] real driver_skill_wet;
+    //array[D] real driver_skill_sum;
 }
 
 transformed parameters {
     array[N] real theta;
     for (i in 1:N) {
-        theta[i] = inv_logit(driver_skill[drivers[i]] + constructor_skill[constructors[i]]);
+        theta[i] = inv_logit(driver_skill[drivers[i]] + (driver_skill_wet[drivers[i]]*rainy[i]) + constructor_skill[constructors[i]]);
     }
 }
 
 model {
     for (i in 1:D){
-        driver_skill[i] ~ normal(2, 1);
+        driver_skill[i] ~ normal(0, 1);
+        driver_skill_wet[i] ~ normal(0, 2);
     }
     for (i in 1:C){
-        constructor_skill[i] ~ normal(2, 1);
+        constructor_skill[i] ~ normal(0, 1);
     }
     position ~ binomial(19 , theta);
 }
