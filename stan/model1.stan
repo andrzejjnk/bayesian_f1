@@ -6,7 +6,7 @@ generated quantities {
     array[D] real driver_skill;
     array[D] real constructor_skill;
     array[D] real theta;
-    array[D] int position;
+    array[D] int<lower=0, upper=19> position;
 
     for (i in 1:D) {
         driver_skill[i] = normal_rng(0, 1);

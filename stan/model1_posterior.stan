@@ -30,9 +30,11 @@ model {
 }
 
 generated quantities {
-    array [N] int position_predicted;
+    array [N] int<lower=0, upper=19> position_predicted;
+    vector [N] log_lik;
 
     for (i in 1:N) {
+        log_lik[i] = binomial_lpmf(position[i] | 19, theta[i]);
         position_predicted[i] = binomial_rng(19, theta[i]);
     }
 }
