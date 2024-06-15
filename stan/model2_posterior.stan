@@ -1,12 +1,11 @@
 data {
     int<lower=1> N; // liczba obserwacji
-    int<lower=1> D; // liczba unikalnych kierowców
-    int<lower=1> C; // liczba unikalnych konstruktorów
-    array [N] int<lower=1, upper=D> drivers; // indeksy kierowców
-    array [N] int<lower=1, upper=C> constructors; // indeksy konstruktorów
-    array [N] int<lower=0, upper=19> position; // pozycje na mecie
-    array [N] int<lower=0, upper=19> qualifying_position; // pozycje startowe
-    array [N] int<lower=0, upper=1> rainy; // czy wyścig odbył się w deszczu
+    int<lower=1> D; // Liczba unikalnych kierowców
+    int<lower=1> C; // Liczba unikalnych konstruktorow
+    array [N] int<lower=1, upper=D> drivers; // indeksy kierowcow
+    array [N] int<lower=1, upper=C> constructors; // indeksy konstruktorow
+    array [N] int<lower=0, upper=19> position;
+    array [N] int<lower=0, upper=1> rainy;
 }
 
 parameters {
@@ -19,11 +18,13 @@ parameters {
 transformed parameters {
     array[D] real driver_skill_sum;
     array[C] real constructor_skill_sum;
+    array[C] real constructor_skill_sum_track_temp;
     array[N] real theta;
     for (i in 1:N) {
-        driver_skill_sum[drivers[i]] = driver_skill[drivers[i]] + (driver_skill_wet[drivers[i]] * rainy[i]);
-        constructor_skill_sum[constructors[i]] = constructor_skill[constructors[i]];
-        theta[i] = inv_logit(driver_skill_sum[drivers[i]] + constructor_skill_sum[constructors[i]] - 0.1 * qualifying_position[drivers[i]]);
+        driver_skill_sum[drivers[i]] = driver_skill[drivers[i]] + driver_skill_wet[drivers[i]]*rainy[i];
+        constructor_skill_sum_track_temp[constructors[i]]  = constructor_skill_track_temp[constructors[i]];
+        constructor_skill_sum[constructors[i]] = constructor_skill[constructors[i]] + constructor_skill_sum_track_temp[constructors[i]];
+        theta[i] = inv_logit(driver_skill_sum[drivers[i]] + constructor_skill_sum[constructors[i]]);
     }
 }
 
@@ -34,9 +35,9 @@ model {
     }
     for (i in 1:C){
         constructor_skill[i] ~ normal(0, 1);
-        constructor_skill_track_temp[i] ~ normal(0, 0.5);
+        constructor_skill_track_temp[i] ~ normal(0, 0.25);
     }
-    position ~ binomial(19, theta);
+    position ~ binomial(19 , theta);
 }
 
 generated quantities {
