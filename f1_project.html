@@ -7526,10 +7526,10 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="1.-Project-formulation">1. Project formulation<a class="anchor-link" href="#1.-Project-formulation">¶</a></h2><p>The goal of the project is to conduct a Bayesian analysis of the places held by Formula One drivers in individual races in the hybrid era, spanning 2022-2024 by predicting the positions taken by drivers in races. The hybrid era, characterized by advanced hybrid powertrain technologies, has introduced new challenges and opportunities that significantly affect race results and team strategies. The analysis aims to identify patterns and factors affecting driver performance in this modern era, using Bayesian analysis tools. The project will collect and analyze data on the results of F1 races from 2022-2024, including drivers' starting and finishing positions, weather conditions, times and finishing positions from other sessions i.e qualifications, sprint qualifications, free practices.</p>
+<h2 id="1.-Project-formulation">1. Project formulation<a class="anchor-link" href="#1.-Project-formulation">¶</a></h2><p>The goal of the project is to conduct a Bayesian analysis of the places held by Formula One drivers in individual races in the hybrid era, spanning 2022-2024 by predicting the positions taken by drivers in races. The hybrid era, characterized by advanced hybrid powertrain technologies, has introduced new challenges and opportunities that significantly affect race results and team strategies. The analysis aims to identify patterns and factors affecting driver performance in this modern era, using Bayesian analysis tools. The project will collect and analyze data on the results of F1 races from 2022-2024, including drivers' starting and finishing positions, weather conditions, times and finishing positions from other sessions i.e qualifications.</p>
 <h3 id="1.1.-Point-of-creating-model-and-potential-use-cases">1.1. Point of creating model and potential use cases<a class="anchor-link" href="#1.1.-Point-of-creating-model-and-potential-use-cases">¶</a></h3><p>Bayesian analysis will make it possible to model the relationship between these variables, identifying the key factors affecting drivers' final positions and to predict future results based on current data. This will enable better preparation of teams for future races, as well as a better understanding of the dynamics of competition in the hybrid era of Formula One. The analysis results can be utilized for educating new team members and drivers, helping them better understand the factors affecting their performance and to develop more effective strategies for upcoming races. Outcome can be highly useful for people involved in betting, as it can predict the positions of drivers with greater accuracy, thereby increasing the chances of winning bets. The last use case is that FIA (The Fédération Internationale de l'Automobile) can leverage the model to evaluate the impact of new technical regulations. This can help enhance the overall spectacle for fans by ensuring closer and more exciting races.</p>
 <h3 id="1.2.-Description-of-the-data">1.2. Description of the data<a class="anchor-link" href="#1.2.-Description-of-the-data">¶</a></h3><p>The data for all sessions from the hybrid era (seasons 2022, 2023, 2024) were scraped from the official Formula 1 website [1], and the weather data were obtained using the FastF1 API [2]. After that, the data from each race weekend were appropriately merged and sorted.
-Below is the representation of all columns in the prepared dataset:</p>
+Below there is the representation of all columns in the prepared dataset:</p>
 <ol>
 <li><strong>Year</strong>: The year in which the race took place.</li>
 <li><strong>Race</strong>: The name or location of the race.</li>
@@ -7617,7 +7617,7 @@ Below is the representation of all columns in the prepared dataset:</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="1.4.-DAG">1.4. DAG<a class="anchor-link" href="#1.4.-DAG">¶</a></h3><p>To visualize the relationships between the variables, we use a Directed Acyclic Graph (DAG):</p>
+<h3 id="1.4.-DAG">1.4. DAG<a class="anchor-link" href="#1.4.-DAG">¶</a></h3><p>To visualize the relationships between the variables, a Directed Acyclic Graph (DAG) was used.</p>
 </div>
 </div>
 </div>
@@ -8263,7 +8263,7 @@ memory usage: 335.8+ KB
 <li>AvgTrackTemp</li>
 <li>Qualifying position</li>
 </ul>
-<p>We rejected the rest of the data because the data contained records that were difficult to analyze (many NaN values ​​in the case of qualifying and training session times), data regarding sprints because they take place relatively rarely, and their formula changed.</p>
+<p>We rejected the rest of the data because the data contained records that were difficult to analyze (many NaN values ​​in the case of qualifying and training session times), data regarding sprints because they take place relatively rare, and their formula changed.</p>
 </li>
 <li><p>Data Cleaning: Delete records with drivers who participated only in free practice sessions and replacing <code>NC</code> and <code>DQ</code> Values in the <strong>Pos (race)</strong> and <strong>Pos (qualifying)</strong> columns with the Last possible position</p>
 </li>
@@ -8480,12 +8480,12 @@ memory usage: 335.8+ KB
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="3.-Models">3. Models<a class="anchor-link" href="#3.-Models">¶</a></h2><p>The objective of all three models is to determine the positions y of drivers in a Formula 1 race.</p>
+<h2 id="3.-Models">3. Models<a class="anchor-link" href="#3.-Models">¶</a></h2><p>The objective of all three models was to determine the positions y of drivers in a Formula 1 races.</p>
 <p>$$ y \sim Binomial(N, \theta) $$</p>
 <p>In Stan, the binomial distribution models the number of successes in a fixed number of trials, each with the same probability of success $\theta$.</p>
 <p>For analyzing Formula 1 race positions from 2022 to 2024, the binomial distribution is ideal as it handles discrete outcomes like drivers' finishing positions. With 20 drivers per race, the number of trials N is 19, and the success probability $\theta$ is calculated separately for each model.<br>
 This allows the estimation of $\theta$, the likelihood of a driver finishing in specific positions, considering multiple races as repeated trials.</br></p>
-<p>Input values in Stan include N =19 and $\theta$, while the output is the posterior distribution of $\theta$ providing insights into driver performance across races. This straightforward model effectively captures race result variability due to factors in the hybrid era.</p>
+<p>Input values in Stan include N =19 and $\theta$, while the output is the binomial distribution providing insights into driver performance across races. This straightforward model effectively captures race result variability due to factors in the hybrid era.</p>
 </div>
 </div>
 </div>
@@ -8621,12 +8621,12 @@ Track temperature effects are modeled with $\mathcal{N}(0, \sigma_{\text{temp}})
 The effect of qualifying position is modeled with $\mathcal{N}(0, \sigma_{\text{quals}}) \cdot$ passingRatio. The normal distribution represents the variability in the importance of starting positions, with the passingRatio scaling this effect based on how easy it is to overtake in a race. This accounts for the significant role of qualifying performance in determining race outcomes.</br></p>
 </li>
 </ul>
-<h3 id="4.2.--Predictive-checks-for-parameters">4.2.  Predictive checks for parameters<a class="anchor-link" href="#4.2.--Predictive-checks-for-parameters">¶</a></h3><p>Predictive checks involve generating simulated data from the model using the posterior distributions of the parameters and comparing it to the observed data. This helps to assess the model's ability to replicate real-world outcomes.</p>
+<h3 id="4.2.--Prior-predictive-checks-for-parameters">4.2.  Prior predictive checks for parameters<a class="anchor-link" href="#4.2.--Prior-predictive-checks-for-parameters">¶</a></h3><p>Predictive checks involve generating simulated data from the model using the distributions of the parameters and comparing it to the observed data. This helps to assess the model's ability to replicate real-world outcomes.</p>
 <p><strong>Procedure</strong></p>
 <ol>
-<li>Generate Simulated Data: Using the posterior distributions of the parameters $\alpha_{\text{driver}}$, $\alpha_{\text{car}}$, $\alpha_{\text{rain}}$, $\alpha_{\text{temp}}$, and $\alpha_{\text{quals}}$, generate simulated race results.</li>
-<li>Compare to Observed Data: Compare the distribution of simulated race positions to the observed positions from the actual race data.</li>
-<li>Diagnostic Metrics: Use metrics such as the posterior predictive p-value, which measures the proportion of simulated data that is more extreme than the observed data. Values near 0.5 indicate good model fit.</li>
+<li>Generate Simulated Data: Using the distributions of the parameters $\alpha_{\text{driver}}$, $\alpha_{\text{car}}$, $\alpha_{\text{rain}}$, $\alpha_{\text{temp}}$, and $\alpha_{\text{quals}}$, generate simulated race results.</li>
+<li>Analyze Observed Data: Compare the distribution of simulated race positions to the observed positions from the actual race data.</li>
+<li>Diagnostic Metrics: Use metrics such as the predictive p-value, which measures the proportion of simulated data that is more extreme than the observed data. Values near 0.5 indicate good model fit.</li>
 </ol>
 <p><strong>Interpretation</strong></p>
 <ul>
@@ -8965,7 +8965,7 @@ INFO:cmdstanpy:CmdStan done processing.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The introduction of weather parameters, specifically related to weather and track temperature, in the second model caused an interesting shift in the distribution of positions. In the first model, the highest probabilities were centered in the middle, whereas in the second model, the highest probabilities were for the first and last positions. From the remaining charts, it can be observed that the main reason for this is precipitation, which makes both overtaking and failing to finish the race (for example, due to an accident caused by slipping) more likely.</p>
+<p>The introduction of weather parameters, specifically related to weather and track temperature, in the second model caused an interesting shift in the distribution of positions. In the first model, the highest probabilities were centered in the middle, whereas in the second model, the highest probabilities were for the first and last positions. From the remaining charts, it can be observed that the main reason for this is rain, which makes both overtaking and failing to finish the race (for example, due to an accident caused by slipping) more likely.</p>
 </div>
 </div>
 </div>
@@ -10256,7 +10256,7 @@ Overall, Model 3 offers a more comprehensive fit, reflecting the importance of q
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>When comparing models 1 and 2, model 2 shows a slight advantage in most situations. However, both models struggle with extreme cases involving unambiguous drivers, such as VER. Additionally, both models perform poorly when a driver has frequently finished in lower positions, as seen with drivers HUL and ALB. In more typical scenarios, both models perform satisfactorily.</p>
+<p>Comparing models 1 and 2, it can be observed that model 2 has a slight advantage in most cases. Unfortunately, both models struggle with drivers who usually achieve high placements but occasionally finish in lower positions, as seen with LEC, VER, RUS, and HAM.</p>
 </div>
 </div>
 </div>
@@ -10330,7 +10330,7 @@ Overall, Model 3 offers a more comprehensive fit, reflecting the importance of q
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>When comparing Models 2 and 3, there are instances where each model performs better or worse, often with overlapping results. However, Model 3 appears to be superior because it avoids significant errors that Model 2 makes, such as for drivers ALB and STR.</p>
+<p>When comparing Models 2 and 3, there are instances where each model performs better or worse, often with overlapping results. However, Model 3 appears to be superior because it avoids significant errors that Model 2 makes, such as for drivers RUS and HAM.</p>
 </div>
 </div>
 </div>
