@@ -8618,7 +8618,7 @@ The influence of rain is modeled with $\mathcal{N}(0, \sigma_{\text{rain}}) \cdo
 Track temperature effects are modeled with $\mathcal{N}(0, \sigma_{\text{temp}})$. The normal distribution is chosen to capture the varying impact of temperature on driver and car performance. The standard deviation $\sigma_{\text{temp}}$ represents the extent of this variability.</br></p>
 </li>
 <li><p><strong>Parameter $\alpha_{\text{quals}}$</strong><br>
-The effect of qualifying position is modeled with $\mathcal{N}(0, \sigma_{\text{quals}}) \cdot$ passingRatio. The normal distribution represents the variability in the importance of starting positions, with the passing_ratio scaling this effect based on how easy it is to overtake in a race. This accounts for the significant role of qualifying performance in determining race outcomes.</br></p>
+The effect of qualifying position is modeled with $\mathcal{N}(0, \sigma_{\text{quals}}) \cdot$ passingRatio. The normal distribution represents the variability in the importance of starting positions, with the passingRatio scaling this effect based on how easy it is to overtake in a race. This accounts for the significant role of qualifying performance in determining race outcomes.</br></p>
 </li>
 </ul>
 <h3 id="4.2.--Predictive-checks-for-parameters">4.2.  Predictive checks for parameters<a class="anchor-link" href="#4.2.--Predictive-checks-for-parameters">¶</a></h3><p>Predictive checks involve generating simulated data from the model using the posterior distributions of the parameters and comparing it to the observed data. This helps to assess the model's ability to replicate real-world outcomes.</p>
