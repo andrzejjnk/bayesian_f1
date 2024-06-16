@@ -35,7 +35,7 @@ model {
     }
     for (i in 1:C){
         constructor_skill[i] ~ normal(0, 1);
-        constructor_skill_track_temp[i] ~ normal(0, 0.25);
+        constructor_skill_track_temp[i] ~ normal(0, 0.5);
     }
     position ~ binomial(19 , theta);
 }
