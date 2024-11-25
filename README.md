@@ -58,7 +58,7 @@ The project employs:
 
 1. Install dependencies listed in `requirements.txt`.
 2. Prepare data using the provided preprocessing scripts.
-3. Run Bayesian models using `cmdstanpy` scripts for posterior analysis.
+3. Run f1_project.ipynb for prior and posterior analysis.
 4. Visualize results with the included plotting utilities.
 
 ## Future Work
