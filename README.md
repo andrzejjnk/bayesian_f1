@@ -46,7 +46,7 @@ We developed three Bayesian models to analyze race results:
 The project employs:
 - **Statistical Framework**: `cmdstanpy`, `arviz`, `numpy`, and `scipy`.
 - **Data Manipulation and Visualization**: `pandas`, `matplotlib`, `seaborn`.
-- **APIs**: Data retrieval from FastF1.
+- **APIs**: Data retrieval from FastF1 and official F1 Web page.
 
 ## Results
 
